@@ -1,29 +1,29 @@
-# Use official Node.js image as the base image
-FROM node:18-alpine
+# Sử dụng hình ảnh Node.js 22 làm base
+FROM node:22-alpine
 
-# Set the working directory
+# Thiết lập thư mục làm việc
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package.json package-lock.json ./
+# Sao chép package.json và package-lock.json (nếu có)
+COPY package*.json ./
 
-# Install dependencies
+# Cài đặt các dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Sao chép toàn bộ mã nguồn vào container
 COPY . .
 
-# Add wait-for script
-COPY wait-for /usr/local/bin/wait-for
+# Tạo thư mục prisma và sao chép schema.prisma
+COPY prisma ./prisma
 
-# Generate Prisma Client
+# Chạy Prisma generate
 RUN npx prisma generate
 
-# Build the Next.js application
+# Xây dựng ứng dụng Next.js
 RUN npm run build
 
-# Expose the port the app runs on
-EXPOSE 3000
+# Thiết lập biến môi trường
+ENV NODE_ENV=production
 
-# Start the application and wait for the database to be ready
-CMD ["wait-for", "db:1433", "--", "npm", "start"]
+# Chạy lệnh để khởi động ứng dụng Next.js
+CMD ["npm", "start"]
