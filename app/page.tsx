@@ -8,9 +8,10 @@ import { Header } from "@/component/Header";
 import { CardComponent } from "@/component/CardComponent";
 import { FooterComponents } from "@/component/Footer";
 
+
 export default function Home() {
   const [courses, setCourses] = useState<CourseDto[]>([]);
-
+  
   useEffect(() => {
     async function fetchData() {
       try {

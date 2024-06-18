@@ -86,10 +86,7 @@ export async function GET(req: NextRequest) {
         select: {
           title: true,
           Videos: {
-            orderBy: {
-              display_order: 'asc',
-              updated_at: 'desc',
-            },
+            orderBy: { display_order: 'asc' },
             select: {
               title: true,
               url: true,
