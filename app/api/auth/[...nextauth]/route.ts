@@ -32,7 +32,7 @@ declare module "next-auth" {
 const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
-    strategy: "jwt", // Use JWT strategy
+    strategy: "jwt", 
   },
   pages: {
     signIn: "/login",
