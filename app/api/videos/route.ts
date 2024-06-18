@@ -54,9 +54,6 @@ export async function POST(req: NextRequest) {
     });
 
     await pump(reader, nodeStream);
-
-    console.log(`File uploaded to ${filePath}`); // Log after upload
-
     await prisma.videos.create({
       data: {
         url: `/upload/${fileName}?v=${Date.now()}`,  // Cập nhật URL để phản ánh đường dẫn mới
@@ -89,11 +86,17 @@ export async function GET(req: NextRequest) {
         select: {
           title: true,
           Videos: {
+            orderBy: {
+              display_order: 'asc',
+              updated_at: 'desc',
+            },
             select: {
               title: true,
               url: true,
+              description: true,
             },
           },
+          
         },
       });
 
@@ -104,7 +107,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(course);
     } else {
       const videos = await prisma.videos.findMany({
-        orderBy: { created_at: 'desc' },
+        orderBy: { updated_at: 'desc' },
       });
       return NextResponse.json(videos);
     }
