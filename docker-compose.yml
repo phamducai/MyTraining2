@@ -12,38 +12,29 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - node-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   adminer:
     image: adminer
     container_name: adminer
     ports:
-      - 5000:8080
-    networks:
-      - node-network
+      - 8080:8080
     depends_on:
       - mysql
 
-  nextjs:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  nextjs-app:
+    image: phamducai2009/nextjs-app:latest
     container_name: nextjs-app
     environment:
       DATABASE_URL: mysql://root:Simple123@mytraining-mysql:3306/MyTraining
-      NEXTAUTH_SECRET: aipd
-      NEXTAUTH_URL: http://localhost:3000
     ports:
       - "3000:3000"
     depends_on:
       - mysql
-    networks:
-      - node-network
-    restart: always
 
 volumes:
   mysql-data:
-
-networks:
-  node-network:
