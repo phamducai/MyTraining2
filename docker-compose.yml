@@ -40,7 +40,7 @@ services:
       - mysql
     networks:
       - node-network
-    restart: always  # Thêm dòng này
+    restart: always
 
 volumes:
   mysql-data:
