@@ -11,7 +11,6 @@ export function SidebarAdmin() {
       <Sidebar.Items>
         <Sidebar.ItemGroup>
           <Sidebar.Collapse label="Quản Lý Khóa Học" className='font-bold' >
-
           <Sidebar.Item onClick={() => router.push("/courses")} className=" cursor-pointer">
               Danh Sách Khóa Học
             </Sidebar.Item>
