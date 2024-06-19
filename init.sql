@@ -1,3 +1,3 @@
--- Tạo người dùng root với quyền truy cập từ mọi nơi
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'Simple123' WITH GRANT OPTION;
+CREATE USER 'root'@'%' IDENTIFIED BY 'Simple123';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;

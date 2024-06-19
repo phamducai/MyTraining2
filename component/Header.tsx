@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 export function Header() {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const isAdmin = session?.user?.role === "admin";
 
   const handleLogout = () => {
     signOut({ callbackUrl: "/login" });
@@ -27,10 +28,12 @@ export function Header() {
         <Navbar.Link active onClick={() => router.push("/")}>
           Trang Chủ
         </Navbar.Link>
-        <Navbar.Link href="#">Khóa Học Của Tôi</Navbar.Link>
-        <Navbar.Link onClick={() => router.push("/admin")}>
-          Quản Trị
-        </Navbar.Link>
+        {/* <Navbar.Link href="#">Khóa Học Của Tôi</Navbar.Link> */}
+        {isAdmin && ( 
+          <Navbar.Link onClick={() => router.push("/admin")}>
+            Quản Trị
+          </Navbar.Link>
+        )}
         <Navbar.Link onClick={handleLogout}>Đăng xuất</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>

@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Table } from "flowbite-react";
 import { SidebarAdmin } from "@/component/SideBarAdmin";
-import HeaderAdmin from "@/component/HeaderAdmin";
 import { format } from "date-fns";
 import { CourseDto } from "@/dto/course.dto";
 import { useRouter } from "next/navigation";
+import { Header } from "@/component/Header";
 
 
 export default function Admin() {
@@ -29,7 +29,7 @@ export default function Admin() {
   };
   return (
     <div className="h-screen overflow-y-hidden">
-      <HeaderAdmin />
+      <Header />
       <div className="pt-16">
         <div className="flex h-screen overflow-y-auto sticky top-16">
           <SidebarAdmin />

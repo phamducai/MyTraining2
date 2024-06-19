@@ -15,7 +15,7 @@ COPY . .
 
 # Tạo thư mục prisma và sao chép schema.prisma
 COPY prisma ./prisma
-RUN npx prisma migrate dev --name init
+# RUN npx prisma migrate dev --name init
 # Chạy Prisma generate
 RUN npx prisma generate
 
