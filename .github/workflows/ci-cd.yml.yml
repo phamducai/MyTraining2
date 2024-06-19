@@ -1,13 +1,30 @@
 name: CI/CD Pipeline
-
 on:
   push:
     branches:
       - main
 
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: Simple123
+          MYSQL_DATABASE: MyTraining
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        ports:
+          - 3307:3306
+        volumes:
+          - type: bind
+            source: ./init.sql
+            target: /docker-entrypoint-initdb.d/init.sql
 
     steps:
       - name: Checkout code
@@ -29,3 +46,6 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/nextjs-app:latest
+
+      - name: Deploy MySQL, Adminer, and Next.js
+        run: docker-compose -f docker-compose.yml up -d
