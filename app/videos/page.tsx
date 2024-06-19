@@ -16,7 +16,6 @@ export default function Courses() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [videoToDelete, setVideoToDelete] = useState<number | null>(null);
   const router = useRouter();
-
   useEffect(() => {
     async function fetchData() {
       try {

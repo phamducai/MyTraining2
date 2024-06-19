@@ -4,24 +4,9 @@ on:
   push:
     branches:
       - main
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:latest
-        ports:
-          - 3307:3306
-        env:
-          MYSQL_ROOT_PASSWORD: Simple123
-          MYSQL_DATABASE: MyTraining
-        options: >-
-          --health-cmd="mysqladmin ping --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
 
     steps:
       - name: Checkout code
@@ -51,10 +36,3 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/nextjs-app:latest
-
-      - name: Check MySQL service logs
-        if: failure()
-        run: docker logs mytraining-mysql
-
-      - name: Deploy services with Docker Compose
-        run: docker-compose -f docker-compose.yml up -d
